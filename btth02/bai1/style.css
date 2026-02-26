@@ -1,0 +1,8 @@
+.row {
+    display: flex;
+    gap: 20px;
+}
+.bottom-row {
+    display: flex;
+    justify-content: space-between;
+}
