@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bảng điểm sinh viên</title>
+
+<style>
+body{
+    font-family: Arial;
+    margin:40px;
+}
+
+input{
+    padding:6px;
+    margin:5px;
+}
+
+button{
+    padding:6px 12px;
+}
+
+table{
+    border-collapse: collapse;
+    margin-top:20px;
+    width:600px;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+
+th{
+    background:#f2f2f2;
+}
+
+.yeu{
+    background:yellow;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Bảng điểm sinh viên</h2>
+
+<input id="name" placeholder="Họ tên">
+<input id="score" type="number" placeholder="Điểm 0-10">
+
+<button onclick="addStudent()">Thêm</button>
+
+<table>
+<thead>
+<tr>
+<th>STT</th>
+<th>Họ tên</th>
+<th>Điểm</th>
+<th>Xếp loại</th>
+<th>Thao tác</th>
+</tr>
+</thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+<p id="stats"></p>
+
+<script>
+
+let students=[];
+
+function rank(score){
+    if(score>=8.5) return "Giỏi";
+    if(score>=7) return "Khá";
+    if(score>=5) return "Trung bình";
+    return "Yếu";
+}
+
+function renderTable(){
+
+let tbody=document.getElementById("tableBody");
+tbody.innerHTML="";
+
+let sum=0;
+
+students.forEach((s,i)=>{
+
+let tr=document.createElement("tr");
+
+if(s.score<5){
+tr.classList.add("yeu");
+}
+
+tr.innerHTML=`
+<td>${i+1}</td>
+<td>${s.name}</td>
+<td>${s.score}</td>
+<td>${rank(s.score)}</td>
+<td><button onclick="deleteStudent(${i})">Xóa</button></td>
+`;
+
+tbody.appendChild(tr);
+
+sum+=s.score;
+
+});
+
+let avg = students.length ? (sum/students.length).toFixed(2) : 0;
+
+document.getElementById("stats").innerText=
+"Tổng sinh viên: "+students.length+" | Điểm trung bình: "+avg;
+
+}
+
+function addStudent(){
+
+let name=document.getElementById("name").value.trim();
+let score=parseFloat(document.getElementById("score").value);
+
+if(name=="" || isNaN(score) || score<0 || score>10){
+alert("Nhập đúng họ tên và điểm 0-10");
+return;
+}
+
+students.push({name:name,score:score});
+
+document.getElementById("name").value="";
+document.getElementById("score").value="";
+
+document.getElementById("name").focus();
+
+renderTable();
+
+}
+
+function deleteStudent(index){
+students.splice(index,1);
+renderTable();
+}
+
+document.getElementById("score").addEventListener("keyup",function(e){
+if(e.key==="Enter"){
+addStudent();
+}
+});
+
+</script>
+
+</body>
+</html>

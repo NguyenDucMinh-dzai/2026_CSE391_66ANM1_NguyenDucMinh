@@ -1,0 +1,40 @@
+body{
+font-family: Arial;
+margin:40px;
+}
+
+form{
+width:400px;
+}
+
+input,select{
+width:100%;
+padding:8px;
+margin:8px 0;
+}
+
+button{
+padding:8px 15px;
+cursor:pointer;
+}
+
+.error{
+color:red;
+font-size:14px;
+}
+
+table{
+border-collapse: collapse;
+margin-top:20px;
+width:600px;
+}
+
+th,td{
+border:1px solid #ccc;
+padding:8px;
+text-align:center;
+}
+
+th{
+background:#f2f2f2;
+}
